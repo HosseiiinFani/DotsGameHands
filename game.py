@@ -10,24 +10,33 @@ def View():
 
     run = True
 
-    GREEN = {
-        'color': (0,255,0),
-    }
-    RED = {
-        'color': (255,0,0),
-    }
-
-    COLORS = [RED, GREEN]
-
     circles = []
     start = timer()
 
     INTERVAL = 1
 
+    points = 0
+
+    def add_points():
+        global points
+        points += 1
+    def remove_points():
+        global points
+        points -= 1
     def calc_distance(point_a, point_b):
         distance = ((point_a[1] - point_b[1]) ** 2 + (point_a[0] - point_b[0]) ** 2) ** 0.5
         return distance
     
+    GREEN = {
+        'color': (0,255,0),
+        'func': add_points,
+    }
+    RED = {
+        'color': (255,0,0),
+        'func': remove_points,
+    }
+
+    COLORS = [RED, GREEN]
     cap = cv2.VideoCapture(camera_id)
 
     while run:
@@ -36,7 +45,7 @@ def View():
             x = randint(50,750)
             y = randint(50,300)
             radius = randint(10,80)
-            new_circle = Circle(screen, base_font, (x,y), COLORS[n%2]['color'], lambda x: x, radius)
+            new_circle = Circle(screen, base_font, (x,y), COLORS[n%2]['color'], COLORS[n%2]['func'], radius)
             circles.append(new_circle)
             start = timer()
 
