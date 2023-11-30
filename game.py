@@ -65,7 +65,15 @@ def View():
 
                         thumb_tip = handLandmarks[4]
                         index_finger_tip = handLandmarks[8]
-
+                        distance = calc_distance(thumb_tip, index_finger_tip)
+                        pygame.mouse.set_pos(WIDTH - index_finger_tip[0] * WIDTH, index_finger_tip[1] * HEIGHT)
+                        if distance < 0.1:
+                            pos = pygame.mouse.get_pos()
+                            for i, circle in enumerate(circles):
+                                cursor_distance = calc_distance(pos, circle.position)
+                                if cursor_distance < circle.radius:
+                                    circle.onClick()
+                                    del circles[i]
 
 
         for event in pygame.event.get():
