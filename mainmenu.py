@@ -3,15 +3,14 @@ from setup import *
 
 from Button import Button
 
+run = True
 def View():
-
+    global run
     center = (screen.get_width()//2, screen.get_height()//2)
-    run = True
 
     def Quit():
         global run
         run = False
-        pygame.quit()
 
     def Play():
         pass
