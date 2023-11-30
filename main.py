@@ -2,9 +2,11 @@ import pygame
 from setup import *
 
 import mainmenu as mainmenu
+import game as game
 
 scenes = {
     'main': mainmenu,
+    'game': game
 }
 
 def main():
