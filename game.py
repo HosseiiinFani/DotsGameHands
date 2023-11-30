@@ -23,6 +23,10 @@ def View():
 
     INTERVAL = 1
 
+    def calc_distance(point_a, point_b):
+        distance = ((point_a[1] - point_b[1]) ** 2 + (point_a[0] - point_b[0]) ** 2) ** 0.5
+        return distance
+    
     while run:
         if timer() - start > INTERVAL:
             n = randint(1,100)
@@ -32,7 +36,7 @@ def View():
             new_circle = Circle(screen, base_font, (x,y), COLORS[n%2]['color'], lambda x: x, radius)
             circles.append(new_circle)
             start = timer()
-            
+
         if len(circles) > 3:
             del circles[0]
 
