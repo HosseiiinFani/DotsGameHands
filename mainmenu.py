@@ -13,7 +13,7 @@ def View():
         run = False
 
     def Play():
-        pass
+        raise Exception("game")
 
     play_button = Button(screen, base_font, (center[0]-70, 160, 140, 40), (23,145,142), "Play", (0,0,0), Play)
     quit_button = Button(screen, base_font, (center[0]-70, 280, 140, 40), (23,145,142), "Quit", (0,0,0), Quit)
@@ -27,7 +27,11 @@ def View():
                 run = False
 
             screen.fill(BG)
-            [element.render(event) for element in UI_ELEMS]
+
+            try:
+                [element.render(event) for element in UI_ELEMS]
+            except Exception as e:
+                return e
 
         pygame.display.flip()
         clock.tick(60)
