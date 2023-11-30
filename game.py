@@ -32,7 +32,10 @@ def View():
             new_circle = Circle(screen, base_font, (x,y), COLORS[n%2]['color'], lambda x: x, radius)
             circles.append(new_circle)
             start = timer()
-        
+            
+        if len(circles) > 3:
+            del circles[0]
+
         for event in pygame.event.get():
     
             if event.type == pygame.QUIT:
