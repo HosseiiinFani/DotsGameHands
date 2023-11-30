@@ -18,6 +18,9 @@ class Circle:
     def render(self, event):
         self._render()
 
+    def onClick(self):
+        self.onClick()
+
     @property
     def position(self):
         return self._pos
