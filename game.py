@@ -2,6 +2,7 @@ import pygame
 from setup import *
 from random import randint
 from timeit import default_timer as timer
+import cv2
 
 from Circle import Circle
 
@@ -27,6 +28,8 @@ def View():
         distance = ((point_a[1] - point_b[1]) ** 2 + (point_a[0] - point_b[0]) ** 2) ** 0.5
         return distance
     
+    cap = cv2.VideoCapture(camera_id)
+
     while run:
         if timer() - start > INTERVAL:
             n = randint(1,100)
@@ -40,6 +43,31 @@ def View():
         if len(circles) > 3:
             del circles[0]
 
+        with mp_hands.Hands(
+            model_complexity=0,
+            min_detection_confidence=0.5,
+            min_tracking_confidence=0.5) as hands:
+            if cap.isOpened():
+                success, image = cap.read()
+                if not success:
+                    print("Ignoring empty camera frame.")
+                    continue
+
+                image.flags.writeable = False
+                image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+                results = hands.process(image)
+
+                image.flags.writeable = True
+                image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
+                if results.multi_hand_landmarks:
+                    for hand_landmarks in results.multi_hand_landmarks:
+                        handLandmarks = [[landmarks.x, landmarks.y] for landmarks in hand_landmarks.landmark]
+
+                        thumb_tip = handLandmarks[4]
+                        index_finger_tip = handLandmarks[8]
+
+
+
         for event in pygame.event.get():
     
             if event.type == pygame.QUIT:
@@ -51,6 +79,7 @@ def View():
 
         pygame.display.flip()
         clock.tick(60)
+    cap.release()
 
 if __name__ == "__main__":
     View()
