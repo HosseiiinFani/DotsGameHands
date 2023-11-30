@@ -21,3 +21,7 @@ class Circle:
     @property
     def position(self):
         return self._pos
+
+    @property 
+    def radius(self):
+        return self.radius
