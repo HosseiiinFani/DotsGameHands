@@ -8,18 +8,18 @@ class Circle:
         self.base_color = color
         self.pos = pos
         self._pos = pos
-        self.radius = radius
+        self._radius = radius
         self.width = width
-        self.onClick = onClick
+        self._onClick = onClick
  
     def _render(self):
-        pygame.draw.circle(self.screen, self.color, self.pos, self.radius, self.width)
+        pygame.draw.circle(self.screen, self.color, self.pos, self._radius, self.width)
     
     def render(self, event):
         self._render()
 
     def onClick(self):
-        self.onClick()
+        self._onClick()
 
     @property
     def position(self):
@@ -27,4 +27,4 @@ class Circle:
 
     @property 
     def radius(self):
-        return self.radius
+        return self._radius
