@@ -1,7 +1,11 @@
 import pygame
 from setup import *
 
-scenes = {}
+import mainmenu as mainmenu
+
+scenes = {
+    'main': mainmenu,
+}
 
 def main():
     scene = 'main'
