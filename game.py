@@ -40,10 +40,10 @@ def View():
     cap = cv2.VideoCapture(camera_id)
 
     while run:
-        if timer() - start > INTERVAL:
+        if timer() - start > randint(1,3):
             n = randint(1,100)
-            x = randint(50,750)
-            y = randint(50,300)
+            x = randint(50,WIDTH-50)
+            y = randint(50,HEIGHT-50)
             radius = randint(10,80)
             new_circle = Circle(screen, base_font, (x,y), COLORS[n%2]['color'], COLORS[n%2]['func'], radius)
             circles.append(new_circle)
