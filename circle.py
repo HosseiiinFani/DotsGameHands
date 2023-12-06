@@ -15,7 +15,7 @@ class Circle:
     def _render(self):
         pygame.draw.circle(self.screen, self.color, self.pos, self._radius, self.width)
     
-    def render(self, event):
+    def render(self):
         self._render()
 
     def onClick(self):
