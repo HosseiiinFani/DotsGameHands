@@ -18,11 +18,15 @@ def View():
     points = 0
 
     def add_points():
-        global points
+        nonlocal points
         points += 1
+        print(points)
+        
     def remove_points():
-        global points
+        nonlocal points
         points -= 1
+        print(points)
+        
     def calc_distance(point_a, point_b):
         distance = ((point_a[1] - point_b[1]) ** 2 + (point_a[0] - point_b[0]) ** 2) ** 0.5
         return distance
@@ -38,24 +42,24 @@ def View():
 
     COLORS = [RED, GREEN]
     cap = cv2.VideoCapture(camera_id)
+    with mp_hands.Hands(
+        model_complexity=0,
+        min_detection_confidence=0.5,
+        min_tracking_confidence=0.5) as hands:
+        while run:
+            if timer() - start > randint(1,3):
+                n = randint(1,100)
+                x = randint(50,WIDTH-50)
+                y = randint(50,HEIGHT-50)
+                radius = randint(10,80)
+                new_circle = Circle(screen, base_font, (x,y), COLORS[n%2]['color'], COLORS[n%2]['func'], radius)
+                circles.append(new_circle)
+                start = timer()
 
-    while run:
-        if timer() - start > randint(1,3):
-            n = randint(1,100)
-            x = randint(50,WIDTH-50)
-            y = randint(50,HEIGHT-50)
-            radius = randint(10,80)
-            new_circle = Circle(screen, base_font, (x,y), COLORS[n%2]['color'], COLORS[n%2]['func'], radius)
-            circles.append(new_circle)
-            start = timer()
+            if len(circles) > 3:
+                del circles[0]
 
-        if len(circles) > 3:
-            del circles[0]
 
-        with mp_hands.Hands(
-            model_complexity=0,
-            min_detection_confidence=0.5,
-            min_tracking_confidence=0.5) as hands:
             if cap.isOpened():
                 success, image = cap.read()
                 if not success:
@@ -84,19 +88,19 @@ def View():
                                     circle.onClick()
                                     del circles[i]
 
-
-        for event in pygame.event.get():
-    
-            if event.type == pygame.QUIT:
-                run = False
-
             screen.fill(BG)
+            [circle.render() for circle in circles]
 
-            [circle.render(event) for circle in circles]
+            for event in pygame.event.get():
+        
+                if event.type == pygame.QUIT:
+                    run = False
 
-        pygame.display.flip()
-        clock.tick(60)
-    cap.release()
+
+
+            pygame.display.flip()
+            clock.tick(60)
+        cap.release()
 
 if __name__ == "__main__":
     View()
