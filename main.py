@@ -3,10 +3,12 @@ from setup import *
 
 import mainmenu as mainmenu
 import game as game
+import gameover as gameover
 
 scenes = {
     'main': mainmenu,
-    'game': game
+    'game': game,
+    'gameover': gameover
 }
 
 def main():
