@@ -123,6 +123,8 @@ def View():
             show_points(image, points)
 
             cv2.imshow('MediaPipe Hands', cv2.flip(image, 1))
+            if cv2.waitKey(1) == ord('p'):
+                cv2.waitKey(-1)
             try:
                 if cv2.waitKey(5) & 0xFF == 27 or points < 0:
                     raise Exception("gameover")
